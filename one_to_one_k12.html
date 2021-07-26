@@ -1,0 +1,486 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <!-- <link rel="stylesheet" href="css/attendence.css"> -->
+        <link rel="stylesheet" type="text/css" href="DataTables/Bootstrap-4-4.1.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="DataTables/DataTables-1.10.20/css/dataTables.bootstrap4.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/faq.css" />
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+
+        <style>
+    
+        html,body{
+            padding: 0;
+            overflow-x: hidden;
+        }
+    
+        .hideOverflowWhenSideNavOpen {
+            overflow: hidden;
+        }
+    
+        /* The sticky class is added to the navbar with JS when it reaches its scroll position */
+        .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        }
+    
+        .brandName{
+            flex-grow: 25;
+        }
+        .loginBtn{
+            flex-grow: 2.5;
+            background-color:transparent;color: #00c8eb;
+        }
+    
+        .loginTxt:hover{
+            text-decoration: underline;
+        }
+        .signUpBtn{
+            flex-grow: 2.5;
+            text-align: center;
+            background-color:#00c8eb;color: white;
+        }
+    
+    
+        .whiteNav{
+            padding:1%;
+            background-color: white;
+            z-index: 45;
+            transition-duration: 0.3s;
+    
+        }
+    
+        .whiteNav .navFlexDiv{
+            align-items: baseline;
+        }
+        
+        .navLinks{
+            flex-grow: 17.5;
+        }
+        
+        .navlinkTxt:hover{
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    
+        .horline{
+            width: 35px;
+            height: 4px;
+            background-color: #00c8eb;
+            margin: 6px 0;
+    
+        }
+    
+        #hamburgler{
+            display: none;
+            flex-grow: 2.5;
+            float: right;
+        }
+    
+        #sideNav{
+            position:fixed;
+            z-index: 100;
+            top: 0;
+            right: 0;
+            width:0%;
+            height:100vh;
+            background-color: white;
+        }
+    
+    
+        .transparent{
+            position: fixed;background: black;opacity: 0.4;height: 100vh;width: 100vw;z-index: 99;display: none;
+        }
+    
+        
+        .sideNavLinks{
+            color:gray;
+            padding: 5%;
+            width: 100%;
+            border-top: 1px solid lightgrey;
+            border-bottom: 1px solid lightgrey;
+            cursor: pointer;
+            padding-left: 8%;
+            transition-duration: 0.4s;
+        }
+        .sideNavLinks:hover{
+            border-top:1px solid #00c8eb;
+            border-bottom:1px solid #00c8eb;
+        }
+    
+    
+        .sideNavLogout{
+            background-color: #00c8eb;
+            color: white;
+        }
+    
+        .sideNavLogout:hover{
+            background-color: tomato;
+        }
+        
+    
+        .bannerRow{
+          padding-bottom: 0;
+          padding-top: 2%;
+        }
+        #bannerTxt{
+          padding-top: 6rem;
+        }
+
+
+        @media only screen and (max-width: 768px) {
+    
+            .whiteNav .navFlexDiv{
+            align-items: center;
+            }
+    
+            #hamburgler{
+                display: block;
+            }
+    
+            .navLinks{
+                display: none;
+            }
+            .loginBtn{
+                display: none;
+            }
+            .signUpBtn{
+                display: none;
+            }
+        }
+        
+        
+        </style>
+        
+        
+    </head>
+    
+    <body>
+
+    <div class="transparent"></div>
+
+    <!-- white sticky nav -->
+        <div class="whiteNav sticky shadow">
+            <div class="container">
+                <div class="navFlexDiv" style="display:flex;flex-wrap: nowrap;">
+                    <div class="brandName"><h3 style="font-weight: 900;">Aca<span style="color: #00c8eb;">STER</span></h3></div>
+                    <div class="navLinks" id="schoolingLink"><span class="navlinkTxt">Schooling </span></div>
+                    <div class="navLinks" id="tutoringLink"><span class="navlinkTxt">Tutoring </span></div>
+                    <div class="navLinks" id="coursesLink"><span class="navlinkTxt">Courses </span></div>
+                    <div class="navLinks" id="enquiryLink"><span class="navlinkTxt">Enquiry </span></div>
+                    <div class="loginBtn"><span class="loginTxt btn btn-sm">Login</span></div>
+                    <div class="signUpBtn"><span class="btn btn-sm" style="">Sign Up</span></div>
+                    <div class="btn btn-sm hamburgler" id="hamburgler" onclick="showSidebar()">
+                        <div class="horline"></div>
+                        <div class="horline"></div>
+                        <div class="horline"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- white sticky nav -->
+
+
+    <!-- white side nav -->
+    <div id="sideNav" style="overflow-y:auto;">
+
+        <div class="sideNavHead" style="padding: 5%;white-space: nowrap;">
+        <div class="loggedInDisplay" style="display: block;">
+            <div style="display: flex;align-items: center;align-items: center;">
+            <div style="font-size: larger;font-weight: 400;flex-grow: 95;"><span style="color: #00c8eb;">Welcome</span></div>
+            <div class="closeBtn btn" style="flex-grow: 3;height: 20px;width: 20px;background-image: url('img/crossIcon.png');background-size: 100% 100%;background-repeat: no-repeat;"><span style=""></span></div>
+            </div>
+            <div style="font-size: larger;font-weight: 400;">Vivek Sharma</div>  
+        </div>
+        <div class="generalDisplay" style="display: none;">
+            <div style="display: flex;align-items: center;white-space: nowrap;">
+            <div style="flex-grow:95"><span class="btn btn-sm btn-link" style="color:gray;">Login</span>&nbsp;<span class="btn btn-sm" style="background-color: #00c8eb;color: white;flex-grow:45;">Sign Up</span></div>
+            <div class="closeBtn btn" style="flex-grow: 3;height: 20px;width: 20px;background-image: url('img/crossIcon.png');background-size: 100% 100%;background-repeat: no-repeat;"><span style=""></span></div> 
+            </div>
+        </div>
+        </div>
+
+        <div class="sideNavMenu" style="display: flex;flex-direction: column;white-space: nowrap;text-align: left;">
+        <div class="sideNavLinks">Homepage</div>
+        <div class="sideNavLinks">Schooling</div>
+        <div class="sideNavLinks">Tutoring</div>
+        <div class="sideNavLinks">Courses</div>
+        <div class="sideNavLinks">Enquiry</div>
+        </div>
+        <div style="text-align: center;padding-top: 8%;"><div class="btn btn-sm btn-danger sideNavLogout" style="width: 80%;">Logout</div></div>
+
+
+    </div>
+    <!-- white side nav -->
+    
+    <div class="bannerMain" style="background-image: url('img/Byjus_wave.png'),url('img/city.jpg');background-size: 100% 100%;background-repeat: no-repeat;margin-top: 5%;height: 100vh;">
+        <div id="banner">
+            <div class="container">
+                <div class="row bannerRow">
+                    <div id="bannerTxt" class="col-lg-6 col-sm-12 ">
+                        <span style="color: grey;font-weight: 700;font-size:2.4rem;text-shadow: 0px 2px 3px white;">One To One Online Lectures</span><p></p>
+                        <span style="font-size:1.5rem;font-weight: 100;font-family: cursive;color: grey;">Academics and non-academics both included</span><p></p>
+                        <span style="font-size: 1rem;font-weight: 600;">CBSE&nbsp;&nbsp;|&nbsp;&nbsp;ICSE&nbsp;&nbsp;|&nbsp;&nbsp;State Board</span><p><br></p>
+                        <span><button class="btn btn-lg" style="background-color: #00c8eb;color:white;border-radius:25px;">&nbsp;&nbsp;Browse all courses&nbsp;&nbsp;</button></span>
+                    </div>
+                    <div id="bannerImg" class="col-lg-6 col-sm-12 rellax" data-rellax-desktop-speed="4" data-rellax-mobile-speed="2" data-rellax-xs-speed="2">
+                        <!-- <img src="img/trohi.png" style="width:100%;padding:12% 5% 10% 5%;"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="padding-top: 4rem;">
+        <div class="jumbotron" style="text-align: center;background-color: #00c8eb;padding: 2%;background-image: url('img/inverted_half_curve.png');background-size: 100% 100%;background-repeat: no-repeat;">
+            <div class="card "><h3 style="color: #00c8eb;padding: 2%;">Academics</h3></div>
+            <div class="row" style="text-align: left;">
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/school-icon-2.png" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>1-12 all boards</b></h5>
+                                <h6 style="text-align:left;color:grey;">We never recommend taking your boards casually. Get india's best online mentors for stateboards, CBSE, ICSC and get </h6><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/12th.png" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>12th Board Exam</b></h5>
+                                <h6 style="text-align:left;color:grey;">Create multiple virtual classes with us and add all your students and other teachers to one place and manage them all. </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/10th.png" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>10th Board Exam</b></h5>
+                                <h6 style="text-align:left;color:grey;">Create multiple virtual classes with us and add all your students and other teachers to one place and manage them all. </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="text-align: left;">
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/scholorship.png" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>Scholorship Preparation</b></h5>
+                                <h6 style="text-align:left;color:grey;">We never recommend taking your boards casually. Get india's best online mentors for stateboards, CBSE, ICSC and get </h6><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/math-book-533985.png" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>Vedic Maths</b></h5>
+                                <h6 style="text-align:left;color:grey;">Create multiple virtual classes with us and add all your students and other teachers to one place and manage them all. </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/olympic-rings.png" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>Olympiad Preparation</b></h5>
+                                <h6 style="text-align:left;color:grey;">Create multiple virtual classes with us and add all your students and other teachers to one place and manage them all. </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-bottom:4%">
+                <h3 style="color: white;padding-top: 6%;font-family: 'Lucida Console', Monaco, monospace;"><b>Become AcasTER tutor</b></h3>
+                <h6 style="color: white;">We always welcome people pattionate about teaching. Be a part of us from today itself.</h6>
+                <button class="btn btn-outline-light" style="font-family: cursive;"><b>Apply Now</b></button>
+            </div>
+        </div>
+
+    
+        <div class="jumbotron" style="text-align: center;position:relative;top: -35px;background-image: url('img/diagonal.png');background-size: 100% 100%;background-repeat: no-repeat;background-color: #3617ff;">
+            <div class="card "><h3 style="color: #3617ff;padding:2%">Non-Academics</h3></div>
+            <div class="row" style="text-align: left;">
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/sports.ico" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>Sports</b></h5>
+                                <h6 style="text-align:left;color:grey;">We never recommend taking your boards casually. Get india's best online mentors for stateboards, CBSE, ICSC and get </h6><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/yoga.png" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>Daily Fitness</b></h5>
+                                <h6 style="text-align:left;color:grey;">Create multiple virtual classes with us and add all your students and other teachers to one place and manage them all. </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/sing.webp" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>Music Classes</b></h5>
+                                <h6 style="text-align:left;color:grey;">Create multiple virtual classes with us and add all your students and other teachers to one place and manage them all. </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="text-align: left;">
+                <div class="col-lg-2 col-sm-0"></div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/dance.png" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>Dance CLasses</b></h5>
+                                <h6 style="text-align:left;color:grey;">We never recommend taking your boards casually. Get india's best online mentors for stateboards, CBSE, ICSC and get </h6><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="card academicsCard " style="padding: 3%;cursor: pointer;">
+                        <div style="display: flex;padding: 1%;align-items: center;">
+                            <div>
+                            <img class="icon-circles" src="img/creative.png" alt="No img" style="padding:13px;height: 100px;width: 100px;">
+                            </div>
+                            <div>
+                                <h5><b>Creativity</b></h5>
+                                <h6 style="text-align:left;color:grey;">Create multiple virtual classes with us and add all your students and other teachers to one place and manage them all. </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-0"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron" style="margin-top:-5%;">
+        <h1>footer</h1>
+    </div>
+
+
+
+
+
+        <script type="text/javascript" src="DataTables/jQuery-3.3.1/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="DataTables/Bootstrap-4-4.1.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="DataTables/DataTables-1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript" src="DataTables/ColReorder-1.5.2/js/dataTables.colReorder.min.js"></script>
+        <script src="DataTables/rellax-master/rellax.min.js"></script>
+        <script>
+    // Accepts any class name
+    var rellax = new Rellax('.rellax');
+
+    function showSidebar()
+    {
+      $("#sideNav").animate({
+          width: "70vw"
+      });
+
+      $('.transparent').css('display','block');
+      $('html').addClass("hideOverflowWhenSideNavOpen");
+    }
+
+    $(".closeBtn").click(function(){
+        $("#sideNav").animate({
+            width: 0
+        });
+        $('.transparent').css('display','none');
+        $('html').removeClass("hideOverflowWhenSideNavOpen");
+
+  	});
+
+    $(".transparent").click(function(){
+    		$("#sideNav").animate({
+          width: 0
+        });
+        $('.transparent').css('display','none');
+        $('html').removeClass("hideOverflowWhenSideNavOpen");
+
+    });
+
+
+    $( window ).resize(function() {
+      if($("#sideNav").css("width")=='0')
+      {
+        $$('.transparent').css('display','none');
+      }
+      if (document.documentElement.clientWidth > 800 )
+      {
+        $("#sideNav").css("width","0");
+        $('.transparent').css('display','none');
+        $('html').removeClass("hideOverflowWhenSideNavOpen");
+
+      }
+      // else if (document.documentElement.clientWidth < 800 )
+      // {
+      //   $("#sideNav").css("width","0");
+      //   $('.transparent').css('display','none');
+      //   $('html').removeClass("hideOverflowWhenSideNavOpen");
+
+      // }
+
+    });
+    
+
+        </script>        
+
+
+    </body>
+</html>
+
+
+
+
+  

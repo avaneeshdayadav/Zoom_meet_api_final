@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <!-- <link rel="stylesheet" href="css/attendence.css"> -->
+    <link rel="stylesheet" type="text/css" href="DataTables/Bootstrap-4-4.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="DataTables/DataTables-1.10.20/css/dataTables.bootstrap4.min.css" />
+
+    <style>
+    
+        html,body{
+            padding: 0;
+            overflow-x: hidden;
+        }
+    
+        .hideOverflowWhenSideNavOpen {
+            overflow: hidden;
+        }
+    
+        /* The sticky class is added to the navbar with JS when it reaches its scroll position */
+        .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        }
+    
+        .brandName{
+            flex-grow: 25;
+        }
+        .loginBtn{
+            flex-grow: 2.5;
+            background-color:transparent;color: #00c8eb;
+        }
+    
+        .loginTxt:hover{
+            text-decoration: underline;
+        }
+        .signUpBtn{
+            flex-grow: 2.5;
+            text-align: center;
+            background-color:#00c8eb;color: white;
+        }
+    
+    
+        .whiteNav{
+            padding:1%;
+            background-color: white;
+            z-index: 45;
+            transition-duration: 0.3s;
+    
+        }
+    
+        .whiteNav .navFlexDiv{
+            align-items: baseline;
+        }
+        
+        .navLinks{
+            flex-grow: 17.5;
+        }
+        
+        .navlinkTxt:hover{
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    
+        .horline{
+            width: 35px;
+            height: 4px;
+            background-color: #00c8eb;
+            margin: 6px 0;
+    
+        }
+    
+        #hamburgler{
+            display: none;
+            flex-grow: 2.5;
+            float: right;
+        }
+    
+        #sideNav{
+            position:fixed;
+            z-index: 100;
+            top: 0;
+            right: 0;
+            width:0%;
+            height:100vh;
+            background-color: white;
+        }
+    
+    
+        .transparent{
+            position: fixed;background: black;opacity: 0.4;height: 100vh;width: 100vw;z-index: 99;display: none;
+        }
+    
+        
+        .sideNavLinks{
+            color:gray;
+            padding: 5%;
+            width: 100%;
+            border-top: 1px solid lightgrey;
+            border-bottom: 1px solid lightgrey;
+            cursor: pointer;
+            padding-left: 8%;
+            transition-duration: 0.4s;
+        }
+        .sideNavLinks:hover{
+            border-top:1px solid #00c8eb;
+            border-bottom:1px solid #00c8eb;
+        }
+    
+    
+        .sideNavLogout{
+            background-color: #00c8eb;
+            color: white;
+        }
+    
+        .sideNavLogout:hover{
+            background-color: tomato;
+        }
+        
+    
+        .bannerRow{
+          padding-bottom: 0;
+          padding-top: 1%;
+        }
+        #bannerTxt{
+          padding-top: 6rem;
+        }
+
+
+        @media only screen and (max-width: 768px) {
+    
+            .whiteNav .navFlexDiv{
+            align-items: center;
+            }
+    
+            #hamburgler{
+                display: block;
+            }
+    
+            .navLinks{
+                display: none;
+            }
+            .loginBtn{
+                display: none;
+            }
+            .signUpBtn{
+                display: none;
+            }
+        }
+        
+        
+        </style>
+        
+</head>
+<body>
+
+
+    <!-- white sticky nav -->
+    <div class="whiteNav sticky shadow">
+        <div class="container">
+            <div class="navFlexDiv" style="display:flex;flex-wrap: nowrap;">
+                <div class="brandName"><h3 style="font-weight: 900;">Aca<span style="color: #00c8eb;">STER</span></h3></div>
+                <div class="navLinks" id="schoolingLink"><span class="navlinkTxt">Schooling </span></div>
+                <div class="navLinks" id="tutoringLink"><span class="navlinkTxt">Tutoring </span></div>
+                <div class="navLinks" id="coursesLink"><span class="navlinkTxt">Courses </span></div>
+                <div class="navLinks" id="enquiryLink"><span class="navlinkTxt">Enquiry </span></div>
+                <div class="loginBtn"><span class="loginTxt btn btn-sm">Login</span></div>
+                <div class="signUpBtn"><span class="btn btn-sm" style="">Sign Up</span></div>
+                <div class="btn btn-sm hamburgler" id="hamburgler" onclick="showSidebar()">
+                    <div class="horline"></div>
+                    <div class="horline"></div>
+                    <div class="horline"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- white sticky nav -->
+
+
+<!-- white side nav -->
+<div id="sideNav" style="overflow-y:auto;">
+
+    <div class="sideNavHead" style="padding: 5%;white-space: nowrap;">
+    <div class="loggedInDisplay" style="display: block;">
+        <div style="display: flex;align-items: center;align-items: center;">
+        <div style="font-size: larger;font-weight: 400;flex-grow: 95;"><span style="color: #00c8eb;">Welcome</span></div>
+        <div class="closeBtn btn" style="flex-grow: 3;height: 20px;width: 20px;background-image: url('img/crossIcon.png');background-size: 100% 100%;background-repeat: no-repeat;"><span style=""></span></div>
+        </div>
+        <div style="font-size: larger;font-weight: 400;">Vivek Sharma</div>  
+    </div>
+    <div class="generalDisplay" style="display: none;">
+        <div style="display: flex;align-items: center;white-space: nowrap;">
+        <div style="flex-grow:95"><span class="btn btn-sm btn-link" style="color:gray;">Login</span>&nbsp;<span class="btn btn-sm" style="background-color: #00c8eb;color: white;flex-grow:45;">Sign Up</span></div>
+        <div class="closeBtn btn" style="flex-grow: 3;height: 20px;width: 20px;background-image: url('img/crossIcon.png');background-size: 100% 100%;background-repeat: no-repeat;"><span style=""></span></div> 
+        </div>
+    </div>
+    </div>
+
+    <div class="sideNavMenu" style="display: flex;flex-direction: column;white-space: nowrap;text-align: left;">
+    <div class="sideNavLinks">Homepage</div>
+    <div class="sideNavLinks">Schooling</div>
+    <div class="sideNavLinks">Tutoring</div>
+    <div class="sideNavLinks">Courses</div>
+    <div class="sideNavLinks">Enquiry</div>
+    </div>
+    <div style="text-align: center;padding-top: 8%;"><div class="btn btn-sm btn-danger sideNavLogout" style="width: 80%;">Logout</div></div>
+
+
+</div>
+<!-- white side nav -->
+
+
+<div style="position: relative;background-image: url('img/desktop_nature.jpg');background-repeat: no-repeat;background-size: 100% 100%;height: 100vh;background-attachment: fixed;">
+    <div style="position: absolute;top:0;background-image:linear-gradient(to right,orange,red);opacity: 0.3;z-index: 3;;height: 100vh;padding-top: 10%;color: white;width: 100vw;">
+    </div>
+    <div style="position: absolute;z-index: 4;top:0;padding-top:8%;">
+        <div class="row rellax" data-rellax-speed='6' style="padding:5%;">
+            <div class="col-lg-6 col-sm-12" style="width: 100%;color: white;text-align:center;">
+                <h1>Welcome to one to one online lectures. dvnnojnr  rpnvoenovnn  pnnn</h1><br>
+                <h5>No more blind trusts</h5>
+                <button class="btn btn-lg btn-light">Book free demo</button>        
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <div class="card" style="background-color: orange;">
+                    <h2 style="color: white;text-align: center;">Contact Us</h2><p></p>
+                    <form class="container">
+                        <div class="form-group">
+                            <label style="color: white;">Mobile Number :</label>
+                            <input placeholder="Ten digit">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: white;">Email :</label>
+                            <input placeholder="example@gmail.com">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet pariatur recusandae assumenda expedita facilis quam ipsam distinctio libero, non voluptatem harum ullam, corrupti quae numquam exercitationem aliquam nisi maiores dolorum.</p>
+
+</body>
+
+
+<div class="transparent"></div>
+
+
+<script type="text/javascript" src="DataTables/jQuery-3.3.1/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="DataTables/Bootstrap-4-4.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="DataTables/DataTables-1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="DataTables/ColReorder-1.5.2/js/dataTables.colReorder.min.js"></script>
+<script src="DataTables/rellax-master/rellax.min.js"></script>
+
+<script>
+
+    // Accepts any class name
+    var rellax = new Rellax('.rellax');
+
+
+    function showSidebar()
+    {
+      $("#sideNav").animate({
+          width: "70vw"
+      });
+
+      $('.transparent').css('display','block');
+      $('html').addClass("hideOverflowWhenSideNavOpen");
+    }
+
+    $(".closeBtn").click(function(){
+        $("#sideNav").animate({
+            width: 0
+        });
+        $('.transparent').css('display','none');
+        $('html').removeClass("hideOverflowWhenSideNavOpen");
+
+  	});
+
+    $(".transparent").click(function(){
+    		$("#sideNav").animate({
+          width: 0
+        });
+        $('.transparent').css('display','none');
+        $('html').removeClass("hideOverflowWhenSideNavOpen");
+
+    });
+
+
+    $( window ).resize(function() {
+      if($("#sideNav").css("width")=='0')
+      {
+        $$('.transparent').css('display','none');
+      }
+      if (document.documentElement.clientWidth > 800 )
+      {
+        $("#sideNav").css("width","0");
+        $('.transparent').css('display','none');
+        $('html').removeClass("hideOverflowWhenSideNavOpen");
+
+      }
+      // else if (document.documentElement.clientWidth < 800 )
+      // {
+      //   $("#sideNav").css("width","0");
+      //   $('.transparent').css('display','none');
+      //   $('html').removeClass("hideOverflowWhenSideNavOpen");
+
+      // }
+
+    });
+    
+
+</script>
+
+</html>
