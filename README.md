@@ -1,4 +1,4 @@
-# Zoom_meet_api_final
+# Zoom Meeting API Integration
 
 **Description :**
 This is a small web application project that uses API provided by Zoom to launch meeting from the website itself without requiring to open zoom app or zoom website seperately. It gives you the credential of the meeting on one click of a button on your website.
